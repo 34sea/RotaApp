@@ -12,17 +12,16 @@ export default function Login() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  
+
   const handleLogin = async () => {
     router.push('/');
     if (name === 'admin') {
-      router.push('/homeAdmin'); // Redireciona para a tela de administrador
+      router.push('/homeAdmin');
     }
     try {
       const storedUsers = await AsyncStorage.getItem('usersMecanic');
       const parsedUsers: User[] = storedUsers ? JSON.parse(storedUsers) : [];
 
-      // Verifica se o usuário é admin ou comum
       const user = parsedUsers.find((user: User) => user.name === name && user.password === password);
 
       if (!user) {
@@ -30,13 +29,12 @@ export default function Login() {
         return;
       }
 
-      // Armazenar os dados do usuário logado
       await AsyncStorage.setItem('loggedInUser', JSON.stringify({ name: user.name }));
 
       if (name === 'admin') {
-        router.push('/homeAdmin'); // Redireciona para a tela de administrador
+        router.push('/homeAdmin');
       } else {
-        router.push('/home'); // Redireciona para a tela do usuário comum
+        router.push('/home');
       }
     } catch (error) {
       console.error('Erro ao fazer login:', error);
@@ -47,7 +45,7 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bem-vindo(a) de volta!</Text>
-      
+
       <TextInput
         style={styles.input}
         placeholder="Usuário"
@@ -55,7 +53,7 @@ export default function Login() {
         value={name}
         onChangeText={setName}
       />
-      
+
       <TextInput
         style={styles.input}
         placeholder="Senha"
@@ -87,19 +85,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4f4f4',
   },
   title: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 40,
+    marginBottom: 30,
     color: '#333',
   },
   input: {
-    height: 50,
+    height: 48,
     borderColor: '#ddd',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 15,
-    marginBottom: 15,
+    marginBottom: 12,
     fontSize: 16,
     backgroundColor: '#fff',
     color: '#333',
@@ -110,7 +108,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 15,
   },
   loginButtonText: {
     color: '#fff',
@@ -120,10 +118,8 @@ const styles = StyleSheet.create({
   registerContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20,
-    position: "absolute",
-    bottom: 20,
-    left: "30%"
+    alignItems: 'center',
+    marginTop: 25,
   },
   registerText: {
     fontSize: 16,
